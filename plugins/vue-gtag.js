@@ -4,6 +4,13 @@ import VueGtag from 'vue-gtag'
 Vue.use(VueGtag, {
   appName: 'data-graphs-ive ',
   config: {
-    id: process.env.googleAnalyticsId
+    id: process.env.googleAnalyticsId,
+    params: {
+      anonymize_ip: true, // anonymize IP
+      send_page_view: false,
+      linker: {
+        domains: ['guillecro.github.io/data-graphs-ive']
+      }
+    }
   }
 })
