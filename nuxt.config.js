@@ -31,12 +31,14 @@ export default {
 
   env: {
     googleSheetId: process.env.GOOGLE_SHEET_ID || '',
-    googleApiKey: process.env.GOOGLE_API_KEY || ''
+    googleApiKey: process.env.GOOGLE_API_KEY || '',
+    googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID || ''
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/vue-echart.js', mode: 'client' }
+    { src: '~/plugins/vue-echart.js', mode: 'client' },
+    { src: '~/plugins/vue-gtag.js', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -49,15 +51,14 @@ export default {
     // https://github.com/nuxt-community/style-resources-module
     '@nuxtjs/style-resources',
     // https://github.com/ecomfe/vue-echarts
-    '@nuxtjs/composition-api/module',
+    '@nuxtjs/composition-api/module'
   ],
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/buefy
     'nuxt-buefy',
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
-    '@nuxtjs/google-gtag'
+    '@nuxtjs/axios'
   ],
   styleResources: {
     // your settings here
@@ -73,17 +74,5 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/echarts/, /zrender/]
-  },
-  'google-gtag': {
-    id: process.env.GOOGLE_ANALYTICS_ID,
-    config: {
-      anonymize_ip: true, // anonymize IP
-      send_page_view: false, // might be necessary to avoid duplicated page track on page reload
-      linker: {
-        domains: ['guillecro.github.io/data-graphs-ive']
-      }
-    },
-    debug: true, // enable to track in dev mode
-    disableAutoPageTrack: false // disable if you don't want to track each page route with router.afterEach(...).
   }
 }
