@@ -9,7 +9,7 @@ Vue.use(VueGtag, {
       anonymize_ip: true, // anonymize IP
       send_page_view: false,
       linker: {
-        domains: ['guillecro.github.io/data-graphs-ive']
+        domains: ['cao-data.github.io/ive']
       }
     }
   }
