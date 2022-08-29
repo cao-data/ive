@@ -74,7 +74,7 @@ export default {
     },
     getChapterLabel () {
       if (this.chapter === null) {
-        return 'Seleccione un capítulo'
+        return 'Seleccione un tema'
       } else {
         return this.chapter
       }
