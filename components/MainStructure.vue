@@ -62,32 +62,25 @@ export default {
     try {
       // console.log(app)
       // fetch with axios
-      const response = await this.$axios.get(`https://sheets.googleapis.com/v4/spreadsheets/${this.googleSheetId}/values/index?key=${this.googleApiKey}`)
+      const response = await this.$axios.get(`https://sheets.googleapis.com/v4/spreadsheets/${this.googleSheetId}/values/index (DEV)?key=${this.googleApiKey}`)
       const chapters = []
       const keys = response.data.values[0]
       const values = response.data.values.slice(1)
       const output = []
+      const fieldsWithBoolean = ['include_nacional', 'habilitado', 'force_full_width', 'enable_table']
       values.forEach((entry) => {
         // eslint-disable-next-line prefer-const
         const graph = {}
         keys.forEach((k, i) => {
+          if (entry[i] === undefined) {
+            // skip undefined values
+            return
+          }
           if (k === 'cast_float') {
             graph[k] = entry[i].split(',')
           } else if (k === 'cast_int') {
             graph[k] = entry[i].split(',')
-          } else if (k === 'include_nacional') {
-            // console.log(k)
-            // console.log(entry[i])
-            // if entry[i] is "TRUE" save as boolean
-            graph[k] = entry[i] === 'TRUE'
-          } else if (k === 'habilitado') {
-            // console.log(k)
-            // console.log(entry[i])
-            // if entry[i] is "TRUE" save as boolean
-            graph[k] = entry[i] === 'TRUE'
-          } else if (k === 'force_full_width') {
-            // console.log(k)
-            // console.log(entry[i])
+          } else if (fieldsWithBoolean.includes(k)) {
             // if entry[i] is "TRUE" save as boolean
             graph[k] = entry[i] === 'TRUE'
           } else if (k === 'capitulo') {
@@ -110,6 +103,7 @@ export default {
       this.$store.commit('data/setChapters', chapters)
       this.$store.commit('data/setIsLoading', false)
     } catch (err) {
+      console.error(err)
       this.$buefy.dialog.alert(`Error al obtener los datos: ${err.message}`)
       return null
     }

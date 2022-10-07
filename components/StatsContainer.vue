@@ -21,6 +21,8 @@
         <SerieHistoricaNacional v-if="graph.grafico_tipo == 'serie_historica_nacional'" :data="theData" :graph="graph" />
         <MultiserieJurisdiccion v-if="graph.grafico_tipo == 'multiserie_jurisdiccion'" :data="theData" :graph="graph" />
         <SerieJurisdiccion v-if="graph.grafico_tipo == 'serie_jurisdiccion'" :data="theData" :graph="graph" />
+        <EspaciosAmigables v-if="graph.grafico_tipo == 'espacios_amigables'" :data="theData" :graph="graph" />
+        <AdhesionProtocolo v-if="graph.grafico_tipo == 'adhesion_protocolo'" :data="theData" :graph="graph" />
       </div>
       <div v-else class="chart is-flex is-justify-content-center is-align-items-center">
         <i class="fas fa-spin fa-5x fa-sync" />
@@ -36,7 +38,7 @@
       <h1 class="subtitle is-6 has-text-grey-light is-flex-grow-1 mb-5">
         Fuente: {{ graph.fuente }}<br>Fecha de actualización: {{ graph.fecha_actualizacion }}
       </h1>
-      <div class="panel is-primary mb-6">
+      <div v-if="graph.enable_table" class="panel is-primary mb-6">
         <div class="panel-heading is-clickable" :class="!showTable ? 'special-radius' : null" @click="showTable = !showTable">
           <div class="panel-title has-text-weight-normal is-flex is-justify-content-space-between is-align-items-center">
             <div>
@@ -63,13 +65,17 @@ import GraphBarraHorizontal from './graphs/BarraHorizontal.vue'
 import SerieHistoricaNacional from './graphs/SerieHistoricaNacional.vue'
 import MultiserieJurisdiccion from './graphs/MultiserieJurisdiccion.vue'
 import SerieJurisdiccion from './graphs/SerieJurisdiccion.vue'
+import EspaciosAmigables from './graphs/EspaciosAmigables.vue'
+import AdhesionProtocolo from './graphs/AdhesionProtocolo.vue'
 export default {
   components: {
     GraphTorta,
     GraphBarraHorizontal,
     SerieHistoricaNacional,
     MultiserieJurisdiccion,
-    SerieJurisdiccion
+    SerieJurisdiccion,
+    EspaciosAmigables,
+    AdhesionProtocolo
   },
   props: {
     graph: {
@@ -184,8 +190,8 @@ export default {
       })
       this.graphReady = true
     } catch (err) {
+      console.error(err)
       this.$buefy.dialog.alert(`Error al obtener los datos: ${err.message}`)
-      // console.error(err)
       return null
     }
   },

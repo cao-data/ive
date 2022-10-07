@@ -7,6 +7,10 @@ $family-primary: 'Encode Sans', $family-sans-serif;
 $primary-light: findLightColor($primary);
 $primary-dark: findDarkColor($primary);
 $primary-invert: findColorInvert($primary);
+$danger: #0097a2;
+$danger-light: findLightColor($primary);
+$danger-dark: findDarkColor($primary);
+$danger-invert: findColorInvert($primary);
 
 // Lists and maps
 $custom-colors: null !default;
