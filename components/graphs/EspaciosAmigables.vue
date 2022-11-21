@@ -1,14 +1,7 @@
 <template>
   <div>
     <div class="layout-mapper">
-      <div id="map"></div>
-      <!-- <mapbox
-        ref="theMap"
-        id="map"
-        :access-token="mapboxApiKey"
-        :map-options="mapboxOptions"
-        @map-load="loaded"
-      /> -->
+      <div id="map" />
     </div>
     <h1 class="title is-4 mt-6 mb-5">Jurisdicción seleccionada: <span class="is-700 has-text-primary">{{ mapStates[selected[0]] }}</span></h1>
     <div class="box mb-6">
@@ -71,11 +64,8 @@
 </template>
 
 <script>
-/* eslint-disable no-undef */
-// import Mapbox from 'mapbox-gl-vue'
 
 export default {
-  // components: { Mapbox },
   props: {
     data: {
       type: Object,
