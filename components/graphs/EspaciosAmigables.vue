@@ -1,12 +1,14 @@
 <template>
   <div>
     <div class="layout-mapper">
-      <mapbox
+      <div id="map"></div>
+      <!-- <mapbox
         ref="theMap"
+        id="map"
         :access-token="mapboxApiKey"
         :map-options="mapboxOptions"
         @map-load="loaded"
-      />
+      /> -->
     </div>
     <h1 class="title is-4 mt-6 mb-5">Jurisdicción seleccionada: <span class="is-700 has-text-primary">{{ mapStates[selected[0]] }}</span></h1>
     <div class="box mb-6">
@@ -70,10 +72,10 @@
 
 <script>
 /* eslint-disable no-undef */
-import Mapbox from 'mapbox-gl-vue'
+// import Mapbox from 'mapbox-gl-vue'
 
 export default {
-  components: { Mapbox },
+  // components: { Mapbox },
   props: {
     data: {
       type: Object,
@@ -86,6 +88,7 @@ export default {
   },
   data () {
     return {
+      map: null,
       currentMarkers: [],
       tableData: []
     }
@@ -103,13 +106,6 @@ export default {
     mapboxApiKey () {
       return process.env.mapboxApiKey
     },
-    mapboxOptions () {
-      return {
-        style: process.env.mapboxMapStyle,
-        center: [process.env.mapCenterLongitude, process.env.mapCenterLatitude],
-        zoom: process.env.mapZoomDefault
-      }
-    },
     extraHeaders () {
       if (!this.data) { return [] }
       const noExtra = ['nro_orden', 'codigo', 'id_jurisdiccion', 'jurisdiccion_grafico', 'lat_long']
@@ -126,13 +122,24 @@ export default {
       }
     }
   },
-  methods: {
-    loaded (map) {
+  mounted () {
+    mapboxgl.accessToken = this.mapboxApiKey
+    this.map = new mapboxgl.Map({
+      container: 'map', // container ID
+      projection: 'mercator',
+      // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+      style: process.env.mapboxMapStyle, // style URL
+      center: [process.env.mapCenterLongitude, process.env.mapCenterLatitude], // starting position [lng, lat]
+      zoom: process.env.mapZoomDefault // starting zoom
+    })
+    this.map.on('load', () => {
       this.prepareChart(map)
-    },
+    })
+  },
+  methods: {
     flyTo (latLong) {
       const coordinates = latLong.split(', ')
-      this.$refs.theMap.map.flyTo({
+      this.map.flyTo({
         center: [coordinates[1], coordinates[0]],
         zoom: 15
       })
@@ -144,7 +151,7 @@ export default {
       })
       this.currentMarkers = []
       // add markers
-      this.prepareChart(this.$refs.theMap.map)
+      this.prepareChart(this.map)
     },
     prepareChart (map) {
       // clear map
@@ -187,7 +194,7 @@ export default {
         const marker = new mapboxgl.Marker(el)
           .setLngLat([coordinates[1], coordinates[0]])
           .setPopup(popup)
-          .addTo(map) // add the marker to the map
+          .addTo(this.map) // add the marker to the map
         this.currentMarkers.push(marker)
       })
     }
@@ -203,4 +210,5 @@ export default {
 .mapboxgl-map {
   height: 100%;
 }
+#map { height: 70vh }
 </style>
