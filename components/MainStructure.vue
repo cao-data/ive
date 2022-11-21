@@ -62,7 +62,7 @@ export default {
     try {
       // console.log(app)
       // fetch with axios
-      const response = await this.$axios.get(`https://sheets.googleapis.com/v4/spreadsheets/${this.googleSheetId}/values/index (DEV)?key=${this.googleApiKey}`)
+      const response = await this.$axios.get(`https://sheets.googleapis.com/v4/spreadsheets/${this.googleSheetId}/values/index?key=${this.googleApiKey}`)
       const chapters = []
       const keys = response.data.values[0]
       const values = response.data.values.slice(1)

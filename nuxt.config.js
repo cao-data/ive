@@ -20,7 +20,11 @@ export default {
     link: [
       { rel: 'icon', type: 'image/png', href: '/ive/favicon.png' },
       { href: 'https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap', rel: 'stylesheet' },
+      { href: 'https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css', rel: 'stylesheet' },
       { href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css', rel: 'stylesheet', integrity: 'sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==', crossorigin: 'anonymous', referrerpolicy: 'no-referrer' }
+    ],
+    script: [
+      { src: 'https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js' }
     ]
   },
 
@@ -32,7 +36,12 @@ export default {
   env: {
     googleSheetId: process.env.GOOGLE_SHEET_ID || '',
     googleApiKey: process.env.GOOGLE_API_KEY || '',
-    googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID || ''
+    googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID || '',
+    mapboxApiKey: process.env.MAPBOX_API_KEY || '',
+    mapboxMapStyle: process.env.MAPBOX_MAP_STYLE || '',
+    mapCenterLatitude: process.env.MAP_CENTER_LATITUDE || '',
+    mapCenterLongitude: process.env.MAP_CENTER_LONGITUDE || '',
+    mapZoomDefault: process.env.MAP_ZOOM_DEFAULT || ''
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

@@ -10,9 +10,7 @@
         <b-table :data="tableData">
           <b-table-column field="jurisdiccion">
             <template #header>
-              <b-tooltip :label="'holis'" append-to-body dashed>
-                Jurisdiccion
-              </b-tooltip>
+              Jurisdiccion
             </template>
             <template #default="props">
               <a @click="handleChange(props.row)">{{ props.row.jurisdiccion }}</a>
@@ -104,7 +102,7 @@
           <div class="column is-6">
             <div class="box is-primary px-4">
               <h1 class="title is-3 has-text-centered">
-                IVL
+                ILE
               </h1>
             </div>
             <div class="columns">
